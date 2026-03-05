@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as THREE from "three";
-
-interface InstancedPointsVisProps {
-  data: Array<{ id: number }>;
-}
+import { useLayout } from "./layouts";
+import type { PointsProps } from "./ThreePointVis";
 
 // re-use for instance computations
 const scratchObject3D = new THREE.Object3D();
 
-const InstancedPoints = ({ data }: InstancedPointsVisProps) => {
+const InstancedPoints = ({ data, layout }: PointsProps) => {
+  useLayout({ data, layout });
+
   const meshRef = React.useRef<THREE.InstancedMesh | null>(null);
   const numPoints = data.length;
 
@@ -19,18 +19,16 @@ const InstancedPoints = ({ data }: InstancedPointsVisProps) => {
 
     // set the transform matrix for each instance
     for (let i = 0; i < numPoints; ++i) {
-      const x = (i % 30) * 1.05;
-      const y = Math.floor(i / 30) * 1.05;
-      const z = 0;
+      const { x, y, z } = data[i];
 
-      scratchObject3D.position.set(x, y, z);
+      scratchObject3D.position.set(x ?? 0, y ?? 0, z ?? 0);
       scratchObject3D.rotation.set(0.5 * Math.PI, 0, 0); // cylinders face z direction
       scratchObject3D.updateMatrix();
       mesh.setMatrixAt(i, scratchObject3D.matrix);
     }
 
     mesh.instanceMatrix.needsUpdate = true;
-  }, [numPoints]);
+  }, [data, layout, numPoints]);
 
   return (
     <instancedMesh
