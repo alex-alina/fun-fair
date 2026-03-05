@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import Controls from "./Controls";
+import InstancedPoints from "./InstancedPoints";
 
 interface ThreePointsVisProps {
   data: Array<{ id: number }>;
@@ -11,7 +12,8 @@ const ThreePointVis = ({ data }: ThreePointsVisProps) => {
       <Controls />
       <ambientLight color="#ffffff" intensity={0.1} />
       <hemisphereLight args={["#42f5a4", "#4287f5", 1.0]} />
-      {data.map((d, i) => {
+      <InstancedPoints data={data} />
+      {/* {data.map((d, i) => {
         const x = (i % 30) * 1.05;
         const y = Math.floor(i / 30) * 1.05;
         const z = 0;
@@ -22,10 +24,10 @@ const ThreePointVis = ({ data }: ThreePointsVisProps) => {
             rotation={[Math.PI * 0.5, 0, 0]}
           >
             <cylinderGeometry args={[0.5, 0.5, 0.15, 32]} />
-            <meshStandardMaterial attach="material" color="#fff" />
+            <meshStandardMaterial color="#fff" />
           </mesh>
         );
-      })}
+      })} */}
     </Canvas>
   );
 };
