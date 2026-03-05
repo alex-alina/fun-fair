@@ -1,20 +1,25 @@
-import "./index.css";
-import { PrimaryButton } from "./components/ui/PrimaryButton";
+import { useState } from "react";
+import ThreePointVis, { type LayoutName } from "./ThreePointVis";
+import clsx from "clsx";
+import { PrimaryButton } from "../components/ui/PrimaryButton";
 import { Link } from "react-router";
 
-function App() {
+const data = new Array(1000).fill(0).map((d, id) => ({ id }));
+
+function ThreePointsPage() {
+  const [layout, setLayout] = useState<LayoutName>("grid");
+
   return (
     <div className="relative box-border h-screen p-4">
-      <Link to={"three-point-vis"} className="mt-3">
-        <PrimaryButton>ThreePointVis</PrimaryButton>
-      </Link>
-      <Link to={"shapes"} className="mt-3">
-        <PrimaryButton>Shapes</PrimaryButton>
-      </Link>
-      {/* <div className="absolute top-0 right-0 bottom-0 left-0">
+      <div className="absolute top-0 right-0 bottom-0 left-0">
         <ThreePointVis data={data} layout={layout} />
       </div>
-      <div className="relative z-10 flex w-fit items-center rounded-xl bg-gray-950 px-4 py-3 text-white">
+      <div className="relative z-10">
+        <Link to={"/"} className="mt-3">
+          <PrimaryButton>Back Home</PrimaryButton>
+        </Link>
+      </div>
+      <div className="relative z-10 flex w-fit items-center justify-between rounded-xl bg-gray-950 px-4 py-3 text-white">
         <strong>Layouts</strong>
         <button
           onClick={() => setLayout("grid")}
@@ -38,9 +43,9 @@ function App() {
         >
           Spiral
         </button>
-      </div> */}
+      </div>
     </div>
   );
 }
 
-export default App;
+export default ThreePointsPage;
